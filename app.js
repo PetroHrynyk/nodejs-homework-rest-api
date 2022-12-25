@@ -1,8 +1,8 @@
 const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
-
 const contactsRouter = require('./routes/api/contacts')
+require("dotenv").config();
 
 const app = express()
 
@@ -20,7 +20,10 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
   const {status = 500, message = "Server error"} = err;
-  res.status(status).json({ message: err.message })
+  res.status(status).json({ message: message })
 })
 
 module.exports = app
+
+// Gp7HpebPw8G@RAY
+// const DB_HOST = "mongodb+srv://Petro:Gp7HpebPw8G@RAY@cluster0.k4gipir.mongodb.net/?retryWrites=true&w=majority"
