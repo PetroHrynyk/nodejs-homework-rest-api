@@ -11,7 +11,13 @@ const updateById = async (req, res, next) => {
       throw error;
     }
     const { id } = req.params;
-    const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+    const { _id } = req.user;
+    const result = await Contact.findOneAndUpdate(
+      { id, owner: _id },
+      req.body,
+      { new: true }
+    );
+    console.log(result);
     if (!result) {
       throw createError(404, `Contact with ID: ${id} not found`);
     }

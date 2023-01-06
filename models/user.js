@@ -1,11 +1,11 @@
 const { Schema, model } = require("mongoose");
-const Joi = require("joi");
+const Joi = require("Joi");
 
-const userSchema = Schema(
+const userSchema = new Schema(
   {
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [true, "Set password for user"],
     },
     email: {
       type: String,
@@ -27,37 +27,19 @@ const userSchema = Schema(
 
 const User = model("user", userSchema);
 
-
-const joiRegistrationSchema = Joi.object({
+const joiRegisterSchema = Joi.object({
   password: Joi.string().required(),
-  email: Joi.string()
-    .email({
-      minDomainSegments: 2,
-      tlds: { allow: ["com", "net"] },
-    })
-    .required(),
+  email: Joi.string().required(),
   subscription: Joi.string().valid("starter", "pro", "business"),
 });
-
 
 const joiLoginSchema = Joi.object({
   password: Joi.string().required(),
-  email: Joi.string()
-    .email({
-      minDomainSegments: 2,
-      tlds: { allow: ["com", "net"] },
-    })
-    .required(),
-});
-
-
-const subscriptionJoiSchema = Joi.object({
-  subscription: Joi.string().valid("starter", "pro", "business"),
+  email: Joi.string().required(),
 });
 
 module.exports = {
   User,
-  joiRegistrationSchema,
+  joiRegisterSchema,
   joiLoginSchema,
-  subscriptionJoiSchema,
 };
