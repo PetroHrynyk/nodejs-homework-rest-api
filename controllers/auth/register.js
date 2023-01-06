@@ -18,7 +18,7 @@ const register = async (req, res, next) => {
             throw new Conflict("Email in use")
         }
         // const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-        const hashPassword = bcrypt.hashSync(password, 10);
+        const hashPassword = bcrypt.hash(password, 10);
         const result = await User.create({ password: hashPassword, email, subscription });
         res.status(201).json({
             Status: "success",
