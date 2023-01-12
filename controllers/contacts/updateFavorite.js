@@ -11,9 +11,10 @@ const updateFavorite = async (req, res, next) => {
       throw error;
     }
     const { id } = req.params;
+    const { _id } = req.user;
     const { favorite } = req.body;
-    const result = await Contact.findByIdAndUpdate(
-      id,
+    const result = await Contact.findOneAndUpdate(
+      { id, owner: _id },
       { favorite },
       { new: true }
     );
